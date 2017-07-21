@@ -3,6 +3,11 @@ name = "recursive_disassembler"
 version = "0.1.0"
 authors = ["coco <coco@hexgolems.com>"]
 
+description = "A simple recursive disassembler based on capstone"
+keywords = ["disassembler","recursive", "capstone"]
+license-file = "LICENSE"
+repository = "https://github.com/eqv/interval-tree"
+
 [dependencies]
 capstone="~0.0.6"
 lazy_static = "~0.2.8"
