@@ -1,6 +1,6 @@
 [package]
 name = "recursive_disassembler"
-version = "2.0.0"
+version = "2.1.0"
 authors = ["coco <coco@hexgolems.com>"]
 
 description = "A simple recursive disassembler based on capstone"

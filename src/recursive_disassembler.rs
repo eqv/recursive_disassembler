@@ -3,6 +3,12 @@ use std::collections::HashMap;
 use bb_disassembler::BBDisassembler;
 use basic_block::BasicBlock;
 
+pub struct Disassembly{
+    pub offset: u64,
+    pub data: Vec<u8>,
+    pub bbs: HashMap<u64, BasicBlock>,
+}
+
 pub struct RecursiveDisassembler<T: BBDisassembler> {
     pub offset: u64,
     pub data: Vec<u8>,
@@ -42,5 +48,10 @@ impl<T: BBDisassembler> RecursiveDisassembler<T> {
 
     fn in_range(&self, addr: u64) -> bool {
         return (self.offset <= addr) && (self.offset + self.data.len() as u64 > addr);
+    }
+
+    pub fn into_disassembly(self) -> Disassembly{
+        let RecursiveDisassembler{ offset, data, bbs, ..} = self;
+        return Disassembly{offset, data, bbs}
     }
 }
