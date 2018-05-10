@@ -8,23 +8,23 @@ mod basic_block;
 mod terminator;
 
 pub use recursive_disassembler::RecursiveDisassembler;
-pub use bb_disassembler::BBDisassembler;
+pub use bb_disassembler::{BBDisassembler, BBDisasmCapstoneX86};
 pub use basic_block::BasicBlock;
-pub  use terminator::Terminator;
+pub use terminator::Terminator;
 
 #[cfg(test)]
 mod tests {
     use ::RecursiveDisassembler;
+    use ::BBDisasmCapstoneX86;
     use ::BasicBlock;
     use ::Terminator;
     use std::collections::HashMap;
-    use capstone::{Capstone, CsArch, CsMode};
 
     #[test]
     fn it_works() {
         let data = vec!(0x66, 0x40, 0x66, 0x50, 0x75, 0xfa, 0x75, 0x06, 0x66, 0x53, 0xeb, 0xfc, 0x0f, 0x04, 0xc3, 0x66, 0x83, 0xc0, 0x01); //see test.asm
-        let cs = Capstone::new(CsArch::ARCH_X86, CsMode::MODE_32).unwrap();
-        let mut disasm = RecursiveDisassembler::new(data, 0, cs);
+        let bbdasm = BBDisasmCapstoneX86::new_32();
+        let mut disasm = RecursiveDisassembler::new(data, 0, bbdasm);
         disasm.add_root(0);
         disasm.disassemble();
         print!("{:?}", disasm.bbs);

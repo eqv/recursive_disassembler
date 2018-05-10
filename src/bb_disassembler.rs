@@ -1,4 +1,4 @@
-use capstone::{Capstone, Insn};
+use capstone::{Capstone, Insn, CsArch, CsMode};
 use regex::Regex;
 use basic_block::BasicBlock;
 use terminator::Terminator;
@@ -7,13 +7,26 @@ pub trait BBDisassembler {
     fn get_basic_block(&mut self, addr: u64, mapping_offset: u64, mapped_data: &[u8]) -> BasicBlock;
 }
 
-impl BBDisassembler for Capstone {
+pub struct BBDisasmCapstoneX86 {
+    cap: Capstone
+}
+
+impl BBDisasmCapstoneX86{
+    pub fn new_32() -> Self{
+        return BBDisasmCapstoneX86{cap: Capstone::new(CsArch::ARCH_X86, CsMode::MODE_32).unwrap()};
+    }
+    pub fn new_64() -> Self{
+        return BBDisasmCapstoneX86{cap: Capstone::new(CsArch::ARCH_X86, CsMode::MODE_64).unwrap()};
+    }
+}
+
+impl BBDisassembler for BBDisasmCapstoneX86 {
     fn get_basic_block(&mut self, addr: u64, mapping_offset: u64, mapped_data: &[u8]) -> BasicBlock {
         let mut bb = BasicBlock::new(addr);
         let stepsize = 50;
         let mut cur = addr;
         while mapping_offset <= cur && (cur - mapping_offset) < mapped_data.len() as u64 {
-            match self.disasm(get_range(cur, stepsize, mapping_offset, mapped_data), addr, 0) {
+            match self.cap.disasm(get_range(cur, stepsize, mapping_offset, mapped_data), addr, 0) {
                 Ok(ins) => {
                     for i in ins.iter() {
                         bb.size += i.size as usize;
