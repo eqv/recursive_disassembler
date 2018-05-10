@@ -4,9 +4,9 @@ version = "0.1.0"
 authors = ["coco <coco@hexgolems.com>"]
 
 description = "A simple recursive disassembler based on capstone"
-keywords = ["disassembler","recursive", "capstone"]
+keywords = ["disassembler","recursive", "capstone", "x86"]
 license-file = "LICENSE"
-repository = "https://github.com/eqv/interval-tree"
+repository = "https://github.com/eqv/recursive_disassembler"
 
 [dependencies]
 capstone="~0.0.6"
