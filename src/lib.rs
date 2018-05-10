@@ -7,7 +7,7 @@ mod bb_disassembler;
 mod basic_block;
 mod terminator;
 
-pub use recursive_disassembler::RecursiveDisassembler;
+pub use recursive_disassembler::{RecursiveDisassembler, Disassembly};
 pub use bb_disassembler::{BBDisassembler, BBDisasmCapstoneX86};
 pub use basic_block::BasicBlock;
 pub use terminator::Terminator;
