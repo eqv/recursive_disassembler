@@ -3,6 +3,7 @@ use std::collections::HashMap;
 use bb_disassembler::BBDisassembler;
 use basic_block::BasicBlock;
 
+#[derive(Debug, Eq, PartialEq)]
 pub struct Disassembly{
     pub offset: u64,
     pub data: Vec<u8>,
